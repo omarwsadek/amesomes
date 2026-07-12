@@ -5,18 +5,22 @@ backend:
   name: github
   repo: omarwsadek/amesomes
   branch: main
+  # OAuth login lives on the site itself (Vercel serverless function).
+  base_url: https://amesomes.com
+  auth_endpoint: /api/auth
 
 # Lets you edit locally with NO login while `npm run dev` is running.
 # Start the tiny proxy in a second terminal:  npx @sveltia/cms-proxy-server
 # then open http://localhost:4321/admin
 local_backend: true
 
-# Uploaded images are written next to posts as ../../assets/blog/<file>,
+# Uploaded images/video are written next to content as ../../assets/<file>,
 # which matches Astro's image() pipeline (they get optimized at build).
-media_folder: "src/assets/blog"
-public_folder: "../../assets/blog"
+media_folder: "src/assets/uploads"
+public_folder: "../../assets/uploads"
 
 collections:
+  # ---------------------------------------------------------------- Journal
   - name: journal
     label: "Journal"
     label_singular: "Journal entry"
@@ -26,6 +30,8 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
+    media_folder: "../../assets/blog"
+    public_folder: "../../assets/blog"
     fields:
       - { name: title, label: "Title", widget: string }
       - { name: description, label: "Short description", widget: text }
@@ -53,10 +59,90 @@ collections:
           required: false,
           options: ["Journal", "Essay", "Note", "Experiment", "Conversation"],
         }
-      - {
-          name: heroImage,
-          label: "Cover image",
-          widget: image,
-          required: false,
-        }
+      - { name: heroImage, label: "Cover image", widget: image, required: false }
       - { name: body, label: "Body", widget: markdown }
+
+  # --------------------------------------------------------------- Projects
+  - name: projects
+    label: "Projects"
+    label_singular: "Project"
+    description: "Creative work. Text + inline images in the body, plus an optional video."
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    media_folder: "../../assets/projects"
+    public_folder: "../../assets/projects"
+    fields:
+      - { name: title, label: "Title", widget: string }
+      - { name: description, label: "Short description", widget: text }
+      - {
+          name: pubDate,
+          label: "Date",
+          widget: datetime,
+          date_format: "yyyy-MM-dd",
+          time_format: false,
+          format: "yyyy-MM-dd",
+        }
+      - {
+          name: tags,
+          label: "Tags",
+          widget: list,
+          required: false,
+          hint: "Add a few keywords, e.g. web, design, experiment.",
+        }
+      - {
+          name: url,
+          label: "External link",
+          widget: string,
+          required: false,
+          hint: "Optional: live site or repo URL.",
+        }
+      - {
+          name: video,
+          label: "Video link",
+          widget: string,
+          required: false,
+          hint: "Optional: paste a YouTube, Vimeo, or .mp4 link to embed a video.",
+        }
+      - { name: heroImage, label: "Cover image", widget: image, required: false }
+      - {
+          name: body,
+          label: "Write-up",
+          widget: markdown,
+          hint: "Type your text here. Use the image button in the toolbar to drop pictures inline.",
+        }
+
+  # ---------------------------------------------------------------- Podcast
+  - name: podcast
+    label: "Podcast"
+    label_singular: "Episode"
+    description: "Episodes. Paste a Spotify link and it embeds automatically."
+    folder: "src/content/podcast"
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    media_folder: "../../assets/podcast"
+    public_folder: "../../assets/podcast"
+    fields:
+      - { name: title, label: "Episode title", widget: string }
+      - { name: description, label: "Short description", widget: text }
+      - {
+          name: pubDate,
+          label: "Publish date",
+          widget: datetime,
+          date_format: "yyyy-MM-dd",
+          time_format: false,
+          format: "yyyy-MM-dd",
+        }
+      - {
+          name: spotify,
+          label: "Spotify link",
+          widget: string,
+          required: false,
+          hint: "Open the episode in Spotify → Share → Copy link, and paste it here.",
+        }
+      - { name: heroImage, label: "Cover image", widget: image, required: false }
+      - { name: body, label: "Show notes", widget: markdown, required: false }

@@ -80,15 +80,36 @@ git add . && git commit -m "New journal entry" && git push
 
 ### B) From anywhere (after one-time GitHub login setup)
 
-To let you and Amy edit from the live site without a code editor, Sveltia
-needs a GitHub login. One-time setup:
+To let you and Amy edit from the live site without a code editor, the CMS
+logs in with GitHub. The login code is already built (`/api/auth` +
+`/api/callback`). You just need to create a GitHub login app and give Vercel
+two secrets. One-time setup:
 
-1. Edit `public/admin/config.yml` → set `repo: YOUR_USERNAME/amesomes`.
-2. Create a GitHub OAuth app + deploy the free auth worker:
-   https://github.com/sveltia/sveltia-cms-auth (Cloudflare Workers, free).
-   It gives you a `base_url` to add under `backend:` in `config.yml`.
-3. Push. Now https://amesomes.com/admin lets either of you log in with
-   GitHub and publish — the CMS commits for you and Vercel deploys.
+**1. Create a GitHub OAuth App.**
+Go to GitHub → Settings → Developer settings → OAuth Apps → **New OAuth App**
+(direct link: https://github.com/settings/developers). Fill in:
+
+- Application name: `AmesOmes CMS`
+- Homepage URL: `https://amesomes.com`
+- Authorization callback URL: `https://amesomes.com/api/callback`
+
+Click **Register application**. Copy the **Client ID**. Click **Generate a new
+client secret** and copy that too (you only see it once).
+
+**2. Add the two secrets to Vercel.**
+Vercel → your `amesomes` project → **Settings → Environment Variables**. Add:
+
+- `OAUTH_GITHUB_CLIENT_ID` = the Client ID
+- `OAUTH_GITHUB_CLIENT_SECRET` = the Client secret
+
+Leave them applied to Production. Save.
+
+**3. Redeploy** so the functions pick up the secrets (Vercel →
+Deployments → ⋯ → Redeploy, or just push any change).
+
+**4. Log in.** Open https://amesomes.com/admin → **Login with GitHub** →
+authorize. You're in. From now on, either of you can write from any browser;
+the CMS commits to GitHub and Vercel redeploys automatically.
 
 Until step B is done, use option A. Nothing breaks in the meantime.
 

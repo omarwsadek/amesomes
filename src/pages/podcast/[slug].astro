@@ -1,0 +1,60 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { spotifyEmbed } from "../../utils/spotify";
+
+export async function getStaticPaths() {
+  const episodes = await getCollection("podcast");
+  return episodes.map((ep) => ({
+    params: { slug: ep.id },
+    props: ep,
+  }));
+}
+type Props = CollectionEntry<"podcast">;
+
+const ep = Astro.props;
+const { Content } = await render(ep);
+const { title, description, pubDate, spotify } = ep.data;
+const embed = spotifyEmbed(spotify);
+---
+
+<Layout title={`${title} — AmesOmes`} description={description}>
+  <article class="mx-auto max-w-3xl px-6 pb-28 pt-16 sm:pt-24">
+    <a
+      href="/podcast"
+      class="mb-8 inline-block text-sm text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)]"
+    >
+      &larr; All episodes
+    </a>
+
+    <p class="mb-3 text-xs uppercase tracking-[0.15em] text-[var(--color-muted)]">
+      <FormattedDate date={pubDate} />
+    </p>
+    <h1 class="font-serif text-4xl leading-tight text-[var(--color-ink)] sm:text-5xl">
+      {title}
+    </h1>
+    <p class="mt-4 text-lg text-[var(--color-muted)]">{description}</p>
+
+    {
+      embed && (
+        <div class="mt-8">
+          <iframe
+            src={embed}
+            title={title}
+            width="100%"
+            height="232"
+            style="border-radius:12px"
+            frameborder="0"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          />
+        </div>
+      )
+    }
+
+    <div class="prose mt-12">
+      <Content />
+    </div>
+  </article>
+</Layout>

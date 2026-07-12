@@ -1,21 +1,65 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import { spotifyEmbed } from "../utils/spotify";
+
+const episodes = (await getCollection("podcast")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <Layout
   title="Podcast — AmesOmes"
   description="Long-form conversations from Amy and Omar."
 >
-  <section class="mx-auto flex min-h-[60vh] max-w-3xl flex-col justify-center px-6 py-24">
-    <p class="mb-4 text-sm uppercase tracking-[0.35em] text-[var(--color-muted)]">
-      Podcast
-    </p>
-    <h1 class="font-serif text-5xl text-[var(--color-ink)] sm:text-6xl">
-      Conversations, soon.
-    </h1>
-    <p class="mt-6 max-w-xl text-lg text-[var(--color-muted)]">
-      Long-form talks with people we find genuinely interesting. Episodes will
-      land here with Spotify players embedded. Stay curious.
-    </p>
+  <section class="mx-auto max-w-3xl px-6 pb-28 pt-20 sm:pt-28">
+    <header class="mb-14">
+      <p class="mb-4 text-sm uppercase tracking-[0.35em] text-[var(--color-muted)]">
+        Podcast
+      </p>
+      <h1 class="font-serif text-5xl text-[var(--color-ink)] sm:text-6xl">
+        Conversations.
+      </h1>
+    </header>
+
+    {
+      episodes.length === 0 ? (
+        <p class="text-[var(--color-muted)]">No episodes yet — soon.</p>
+      ) : (
+        <ul class="flex flex-col gap-12">
+          {episodes.map((ep) => {
+            const embed = spotifyEmbed(ep.data.spotify);
+            return (
+              <li class="border-t border-[var(--color-line)] pt-8">
+                <p class="mb-2 text-xs uppercase tracking-[0.15em] text-[var(--color-muted)]">
+                  <FormattedDate date={ep.data.pubDate} />
+                </p>
+                <h2 class="text-2xl font-medium text-[var(--color-ink)]">
+                  <a href={`/podcast/${ep.id}/`} class="hover:underline underline-offset-4">
+                    {ep.data.title}
+                  </a>
+                </h2>
+                <p class="mt-2 text-[var(--color-muted)]">{ep.data.description}</p>
+                {embed && (
+                  <div class="mt-5">
+                    <iframe
+                      src={embed}
+                      title={ep.data.title}
+                      width="100%"
+                      height="152"
+                      style="border-radius:12px"
+                      frameborder="0"
+                      loading="lazy"
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    />
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
   </section>
 </Layout>
