@@ -1,114 +1,75 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { readingTime } from "../../utils/readingTime";
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout
+  title="Journal — AmesOmes"
+  description="Writing from Amy and Omar: essays, notes, and experiments from the lab."
+>
+  <section class="mx-auto max-w-4xl px-6 pb-28 pt-20 sm:pt-28">
+    <header class="mb-14">
+      <p class="mb-4 text-sm uppercase tracking-[0.35em] text-[var(--color-muted)]">
+        Journal
+      </p>
+      <h1 class="font-serif text-5xl text-[var(--color-ink)] sm:text-6xl">
+        Thinking out loud.
+      </h1>
+    </header>
+
+    <ul class="flex flex-col">
+      {
+        posts.map((post) => (
+          <li class="border-t border-[var(--color-line)]">
+            <a
+              href={`/blog/${post.id}/`}
+              class="group flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:gap-8"
+            >
+              {post.data.heroImage && (
+                <div class="w-full overflow-hidden rounded-xl sm:w-48 sm:shrink-0">
+                  <Image
+                    src={post.data.heroImage}
+                    width={480}
+                    height={300}
+                    alt=""
+                    class="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-28"
+                  />
+                </div>
+              )}
+              <div class="flex-1">
+                <div class="mb-2 flex items-center gap-3 text-xs uppercase tracking-[0.15em] text-[var(--color-muted)]">
+                  <span>{post.data.category ?? "Journal"}</span>
+                  <span aria-hidden="true">·</span>
+                  <FormattedDate date={post.data.pubDate} />
+                  <span aria-hidden="true">·</span>
+                  <span>{readingTime(post.body)}</span>
+                </div>
+                <h2 class="text-2xl font-medium text-[var(--color-ink)]">
+                  {post.data.title}
+                </h2>
+                <p class="mt-2 text-[var(--color-muted)]">
+                  {post.data.description}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      posts.length === 0 && (
+        <p class="text-[var(--color-muted)]">
+          No entries yet. The first one is coming soon.
+        </p>
+      )
+    }
+  </section>
+</Layout>

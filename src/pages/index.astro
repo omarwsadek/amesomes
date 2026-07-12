@@ -1,49 +1,66 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+
+// Placeholder "latest" items. Swap these for real content in Session 2.
+const latest = [
+  {
+    kind: "Journal",
+    title: "Why we built a lab instead of a blog",
+    excerpt:
+      "Notes on curiosity, and why AmesOmes is a place to think out loud.",
+    href: "/blog",
+  },
+  {
+    kind: "Project",
+    title: "Experiments in progress",
+    excerpt: "A running gallery of things we are making and breaking.",
+    href: "/portfolio",
+  },
+  {
+    kind: "Podcast",
+    title: "Conversations, soon",
+    excerpt: "Long-form talks with people we find genuinely interesting.",
+    href: "/podcast",
+  },
+];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout title="AmesOmes — A digital lab for curious minds">
+  <Hero />
+
+  <!-- Latest content -->
+  <section class="mx-auto max-w-6xl px-6 pb-28">
+    <div
+      class="mb-10 flex items-end justify-between border-b border-[var(--color-line)] pb-4"
+    >
+      <h2 class="text-sm uppercase tracking-[0.25em] text-[var(--color-muted)]">
+        Latest
+      </h2>
+    </div>
+
+    <div class="grid gap-px overflow-hidden rounded-2xl border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-3">
+      {
+        latest.map((item) => (
+          <a
+            href={item.href}
+            class="group flex flex-col bg-[var(--color-paper)] p-8 transition-colors hover:bg-[var(--color-surface)]"
+          >
+            <span class="text-xs uppercase tracking-[0.2em] text-[var(--color-muted)]">
+              {item.kind}
+            </span>
+            <h3 class="mt-4 text-xl font-medium text-[var(--color-ink)]">
+              {item.title}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
+              {item.excerpt}
+            </p>
+            <span class="mt-6 text-sm text-[var(--color-ink)] opacity-0 transition-opacity group-hover:opacity-100">
+              Read &rarr;
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
