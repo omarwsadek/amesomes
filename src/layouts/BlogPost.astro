@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
 import FormattedDate from "../components/FormattedDate.astro";
@@ -52,13 +51,7 @@ const {
     {
       heroImage && (
         <div class="mb-12 overflow-hidden rounded-2xl">
-          <Image
-            src={heroImage}
-            width={1020}
-            height={510}
-            alt=""
-            class="w-full object-cover"
-          />
+          <img src={heroImage} alt="" class="w-full object-cover" />
         </div>
       )
     }

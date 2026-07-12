@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 
 const projects = (await getCollection("projects")).sort(
@@ -36,11 +35,10 @@ const projects = (await getCollection("projects")).sort(
             >
               {project.data.heroImage && (
                 <div class="aspect-[16/10] overflow-hidden">
-                  <Image
+                  <img
                     src={project.data.heroImage}
-                    width={720}
-                    height={450}
                     alt=""
+                    loading="lazy"
                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>

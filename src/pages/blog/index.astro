@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 import { readingTime } from "../../utils/readingTime";
@@ -34,11 +33,10 @@ const posts = (await getCollection("blog")).sort(
             >
               {post.data.heroImage && (
                 <div class="w-full overflow-hidden rounded-xl sm:w-48 sm:shrink-0">
-                  <Image
+                  <img
                     src={post.data.heroImage}
-                    width={480}
-                    height={300}
                     alt=""
+                    loading="lazy"
                     class="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-28"
                   />
                 </div>

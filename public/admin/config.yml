@@ -14,10 +14,10 @@ backend:
 # then open http://localhost:4321/admin
 local_backend: true
 
-# Uploaded images/video are written next to content as ../../assets/<file>,
-# which matches Astro's image() pipeline (they get optimized at build).
-media_folder: "src/assets/uploads"
-public_folder: "../../assets/uploads"
+# Uploaded images/video are stored in /public/uploads and referenced with an
+# absolute URL (/uploads/<file>). Sveltia requires public_folder to start "/".
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
 collections:
   # ---------------------------------------------------------------- Journal
@@ -30,8 +30,6 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    media_folder: "../../assets/blog"
-    public_folder: "../../assets/blog"
     fields:
       - { name: title, label: "Title", widget: string }
       - { name: description, label: "Short description", widget: text }
@@ -72,8 +70,6 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    media_folder: "../../assets/projects"
-    public_folder: "../../assets/projects"
     fields:
       - { name: title, label: "Title", widget: string }
       - { name: description, label: "Short description", widget: text }
@@ -124,8 +120,6 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
-    media_folder: "../../assets/podcast"
-    public_folder: "../../assets/podcast"
     fields:
       - { name: title, label: "Episode title", widget: string }
       - { name: description, label: "Short description", widget: text }
