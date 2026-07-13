@@ -4,7 +4,7 @@ description: Why we built a lab instead of a blog, and what you'll find inside.
 pubDate: yyyy-07-Mo
 updatedDate: ''
 category: Essay
-heroImage: ''
+heroImage: /uploads/Post 1.png
 ---
 
 Every workspace tells you what it's for before you've done anything in it. A stage asks you to perform. A gallery asks you to admire. A shop asks you to buy. We wanted a room that asks you to \*try things\* so we built a lab. 
