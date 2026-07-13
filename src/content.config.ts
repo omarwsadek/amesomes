@@ -9,8 +9,10 @@ const blog = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		pubDate: z.coerce.date(),
-		updatedDate: z.coerce.date().optional(),
+		// .catch() = if a date is ever malformed (e.g. a CMS glitch), fall back
+		// instead of failing the whole site build.
+		pubDate: z.coerce.date().catch(() => new Date()),
+		updatedDate: z.coerce.date().optional().catch(undefined),
 		category: z.string().optional(),
 		heroImage: z.string().optional(),
 	}),
@@ -21,7 +23,7 @@ const projects = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		pubDate: z.coerce.date(),
+		pubDate: z.coerce.date().catch(() => new Date()),
 		tags: z.array(z.string()).optional(),
 		url: z.string().optional(),
 		// Paste a YouTube/Vimeo link or a direct .mp4 URL to embed a video.
@@ -35,7 +37,7 @@ const podcast = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		pubDate: z.coerce.date(),
+		pubDate: z.coerce.date().catch(() => new Date()),
 		// Paste the Spotify episode share link; it gets embedded automatically.
 		spotify: z.string().optional(),
 		heroImage: z.string().optional(),

@@ -37,18 +37,18 @@ collections:
           name: pubDate,
           label: "Publish date",
           widget: datetime,
-          date_format: "yyyy-MM-dd",
+          date_format: "YYYY-MM-DD",
           time_format: false,
-          format: "yyyy-MM-dd",
+          format: "YYYY-MM-DD",
         }
       - {
           name: updatedDate,
           label: "Updated date",
           widget: datetime,
           required: false,
-          date_format: "yyyy-MM-dd",
+          date_format: "YYYY-MM-DD",
           time_format: false,
-          format: "yyyy-MM-dd",
+          format: "YYYY-MM-DD",
         }
       - {
           name: category,
@@ -77,9 +77,9 @@ collections:
           name: pubDate,
           label: "Date",
           widget: datetime,
-          date_format: "yyyy-MM-dd",
+          date_format: "YYYY-MM-DD",
           time_format: false,
-          format: "yyyy-MM-dd",
+          format: "YYYY-MM-DD",
         }
       - {
           name: tags,
@@ -127,9 +127,9 @@ collections:
           name: pubDate,
           label: "Publish date",
           widget: datetime,
-          date_format: "yyyy-MM-dd",
+          date_format: "YYYY-MM-DD",
           time_format: false,
-          format: "yyyy-MM-dd",
+          format: "YYYY-MM-DD",
         }
       - {
           name: spotify,
