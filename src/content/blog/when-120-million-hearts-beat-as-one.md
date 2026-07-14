@@ -4,7 +4,7 @@ description: My observations and questions about the 2026 World Cup
 pubDate: 2026-07-14
 updatedDate: 2026-07-14
 category: Conversation
-heroImage: ''
+heroImage: /uploads/72df4aff-7235-49d3-ba85-6f4fdf5329f2.jpg
 ---
 
 A global ritual capable of synchronizing the emotions of millions of people, the World Cup is unlike any other event and it’s given us one hell of a tournament this year. From discovering and falling in love with a friendly Norwegian Giant to witnessing social media erupt with anger and (not-so-conspiracy) theories overnight, this tournament was full of one-of-a-kind moments we know we’ll never forget.
