@@ -19,7 +19,7 @@ Another single heartbeat.
 
 With only 10 minutes left, and a 2-0 lead, our collective dream was within reach, and we all believed we had done it; but what happened next was a heartbreaking finale. An extremely aggressive opponent, and an incredibly controversial referee performance lead to our defeat. 3 goals in 10 minutes.
 
-What ensued was unlike anything I had ever witnessed in all my years of living. Anger. Heartbreak. Defeat. Being on the receiving end of such grave injustice, ironically seemed to be the moment that united us most. One day passes, then another and another and still no one is able to forget and move on. Social media replayed moments from the match and every conversation found its way back to the referees decisions, the disallowed goal, and the last 10 minutes. Every discussion I had in the week that followed ended the same way: “_This is about more than football._"
+What ensued was unlike anything I had ever witnessed. Anger. Heartbreak. Defeat. Being on the receiving end of such grave injustice, ironically seemed to be the moment that united us most. One day passes, then another and another and still no one is able to forget and move on. Social media replayed moments from the match and every conversation found its way back to the referees decisions, the disallowed goal, and the last 10 minutes. Every discussion I had in the week that followed ended the same way: “_This is about more than football_"
 
 So what is it about? How could a 90 minute football match leave an entire nation emotionally paralyzed for weeks to follow? 
 
